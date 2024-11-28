@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API_URL = 'http://127.0.0.1:8000/api/todos/';
+const API_URL = 'https://todo-app-murex-alpha.vercel.app/';
 
 function App() {
     const [todos, setTodos] = useState([]);
