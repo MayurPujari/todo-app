@@ -25,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-)099j4t4t+$!&(nh^kf%jq01p19$(z!y#uw#mi=&^7fli@qt#+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
-CORS_ALLOW_ALL_ORIGINS = True
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'todo-app-production-91ad.up.railway.app']
+CSRF_TRUSTED_ORIGINS= ['https://todo-app-production-91ad.up.railway.app']
 
 
 # Application definition
@@ -88,22 +88,24 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'todo_app',
+#         'USER': 'postgres',
+#         'PASSWORD': 'postgres',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'todo_app',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default='postgresql://postgres:syvuQdwRewPyGAbfvRiXPajmudOtOZhw@autorack.proxy.rlwy.net:50347/railway',
+        conn_max_age=600,
+    )
 }
 
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=os.getenv('DATABASE_URL')
-#     )
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -141,10 +143,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
 
-# Heroku stores static files in this location
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
